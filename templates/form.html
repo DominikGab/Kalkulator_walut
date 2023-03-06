@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aktualne kursy walut</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                {% for header in currencies_data %}
+                <th>{{ header }}</th> 
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for currency in currencies %}
+            <tr>
+                {% for field in currency %}
+                <td>{{ field }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <form method="POST" action="">
+        <label for="currency">Wybierz walutę z listy:</label>
+        <select name="currency" id="currency">
+            {% for currency in currencies %}
+            <option value="{{ currency[1] }}" {% if selected_currency == currency[1] %} selected {% endif %}>{{ currency[1] }}</option>
+            {% endfor %}
+        </select>
+        <label for="amount">Podaj ile waluty chcesz kupić:</label>
+        <input type="number" name="amount" id="amount">
+        <button type="submit">Przelicz</button>
+    </form>
+    {% if conversion_result %}
+    <br>
+    <p>Masz mi zapłacić: {{ conversion_result }} PLN</p>
+    {% endif %}
+</body>
+</html>
